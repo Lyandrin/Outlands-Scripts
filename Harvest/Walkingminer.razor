@@ -1,0 +1,74 @@
+    #######Mining Loop####### 
+    
+    overhead 'Love Tap!' 23
+    #Hit it once to start 
+    hotkey 'use item in hand'
+    settimer "miner" 0
+    wait 1250
+    
+    while not insysmsg 'You do not see any'
+    
+        if insysmsg 'Now tracking'
+            overhead 'Ah shit!!!'
+            cast 'recall'
+            waitfortarget
+            target 'escape'
+            wait 500
+            while mana = maxmana
+                overhead "Recall failed"
+                cast 'recall'
+                waitfortarget
+                target 'escape'
+                wait 500
+            endwhile
+            stop
+        endif    
+        
+        #Weight check
+        if weight >= 450
+                overhead 'Too fat - restart'
+                break
+        endif
+        
+        #Above loops more often, this is where we wait for mining timer between swings
+        if timer "miner" >= 1050            
+            #clearsysmsg 
+            hotkey 'use item in hand'
+            settimer "miner" 0
+            wait 200
+        endif
+    endwhile
+        
+    overhead 'Spot Done' 33
+    sysmsg 'Spot Done' 33    
+    ######DUMP Loop#######
+    if findtype 6585 'backpack'
+        
+        #Check if we have used all packies
+        if list packAnimals <= 0
+            @clearlist packAnimals
+        endif
+        
+        #Set Organizer 15 to whatever packie is next
+        if inlist 'packAnimals' 'p1'
+            overhead 'Pack 1 Dump!'
+            organizer 15 'set' 
+            wft 500
+            target 'pack1'
+            poplist 'packAnimals' 'front'
+            else
+            overhead 'Something done broke'
+        endif    
+        wait 100
+    
+        #Organizer is now set, dump
+        organizer 15
+    endif
+    
+    hotkey 'All Names'
+    overhead 'Time to move!'
+    
+    foreach x in moveList
+        walk x
+        wait 150
+    endfor

@@ -1,0 +1,31 @@
+if skill Parry >= 80
+    hotkey 'Cancel Current Target'
+    pause 100
+    msg '[taunt'
+    wft 1500
+    hotkey 'Target Self'
+    pause 600 
+    script '#Autobandage'
+endif
+
+if skill Animal Taming >= 80
+    hotkey 'Cancel Current Target'
+    pause 50
+    dclicktype 25750
+    pause 600
+    if insysmsg 'You begin using veterinary supplies'
+        pause 500
+        overhead '4 Seconds' 95
+        pause 1000
+        overhead '3 seconds' 95
+        pause 1000
+        overhead '2 seconds' 95
+        pause 1000
+        overhead '1 second' 95
+        pause 1000
+    endif
+endif
+
+if skill Hiding >= 80
+    skill Hiding
+endif

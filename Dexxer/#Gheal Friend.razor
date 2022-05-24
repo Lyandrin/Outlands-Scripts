@@ -1,0 +1,15 @@
+hotkey 'Cancel Current Target'
+dress 'Spellbook'
+pause 50
+cast 'Greater Heal'
+wft 5000
+if findtype 'an earth elemental' 'true'
+    targettype 'an earth elemental'
+elseif findtype 'a water elemental' 'true'
+    targettype 'a water elemental'
+elseif findtype 'an earth elemental'
+    targettype 'an earth elemental'
+elseif findtype 'a water elemental'
+    targettype 'a water elemental'
+endif
+pause 100

@@ -1,0 +1,23 @@
+#Water - Change the "Ingump" string 
+# to what unique text for weapon/armour
+# change gumpresponse from 
+# 5=weapon to 10=book
+# and 8=weapon and 13=book
+
+gumpclose 2424293173
+say '[aspects'
+waitforgump 2424293173
+
+#Weapon/Book Swap
+#use unique value or text just for weapon *OR* book
+while not ingump 'Ravage' 2424293173
+    #Change this to 10 for book
+    gumpresponse 5 2424293173
+    waitforgump 2424293173
+endwhile
+#Change this and next to 13 for book
+gumpresponse 8 2424293173
+wait 100
+gumpresponse 8 2424293173
+
+gumpclose 2424293173

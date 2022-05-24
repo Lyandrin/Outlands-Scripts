@@ -1,0 +1,15 @@
+hotkey 'Attack Last Target'
+dress 'Primary Aspect'
+pause 50
+
+if skill Herding >= 80
+    hotkey 'Cancel Current Target'
+    pause 50
+    dclicktype 3713 backpack
+    wft 5000
+    lasttarget
+endif
+
+if skill healing >= 50
+    script '#Autobandage'
+endif

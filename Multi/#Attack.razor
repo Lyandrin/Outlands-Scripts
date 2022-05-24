@@ -1,0 +1,16 @@
+hotkey 'Set Last Target (Harmful)'
+pause 50
+hotkey 'Cancel Current Target'
+dress 'Primary Aspect'
+
+if skill Herding >= 80
+    hotkey 'Cancel Current Target'
+    pause 50
+    msg '[Focusaggression'
+    wft 5000
+    lasttarget
+endif
+
+if skill healing >= 50
+    script '#Autobandage'
+endif

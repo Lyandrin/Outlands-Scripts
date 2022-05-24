@@ -1,0 +1,19 @@
+menu 0x4052BDC1 1
+pause 600
+for 10
+    dclicktype 3739 backpack
+    pause 600
+    gumpresponse 7
+    pause 1750
+//Check for Society Completion
+if insysmsg 'You have completed a society job'
+    stop
+endif
+endfor
+menu 0x4052BDC1 0
+waitfortarget 1000
+hotkey 'Target Self'
+pause 1000
+gumpclose
+pause 250
+loop

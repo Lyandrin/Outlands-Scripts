@@ -1,0 +1,21 @@
+if not timerexists "shroom"
+    createtimer "shroom"
+    settimer "shroom" 60000
+endif
+
+if mana < maxmana and timer 'shroom' >= 60000
+dclicktype 29012
+pause 50
+endif
+
+if insysmsg 'You consume a magic'
+    settimer 'shroom' 0
+endif
+
+if skill Meditation >= 50
+skill Meditation
+endif
+
+if skill Healing >= 80
+    script '#Autobandage'
+endif

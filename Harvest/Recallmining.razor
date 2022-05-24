@@ -1,0 +1,289 @@
+clearsysmsg 
+    #Tracking Routine - Turn it on if we have not yet
+        while not insysmsg "You will receive"
+            hotkey 'Tracking'
+            wait 600
+            gumpresponse 6 4267467659
+            wait 550
+            gumpclose 4267467659
+        endwhile  
+        
+    ###Timers###
+#Recalltimer since you cant mine for 60 seconds after recalling
+    createtimer recalltimer
+    settimer recalltimer 0
+#Mining timer
+    createtimer "miner"
+    settimer "miner" 1100
+
+    ###Lists###
+@createlist packAnimals
+        @clearlist packAnimals
+        @pushlist 'packAnimals' "p1"
+        @pushlist 'packAnimals' "p2"
+        @pushlist 'packAnimals' "p3"
+
+
+@createlist Runebooks
+    if list Runebooks <= 0
+        @clearlist Runebooks
+        @pushlist 'Runebooks' "0x4179114F"
+        @pushlist 'Runebooks' "0x40B5B611"
+    endif 
+    
+#Populate our runes
+createlist 'runes'
+#clearlist  'runes'
+    if skill "Magery" >= 40
+        #gumps here for recall spell use
+        pushlist 'runes' 5
+        pushlist 'runes' 11
+        pushlist 'runes' 17
+        pushlist 'runes' 23
+        pushlist 'runes' 29
+        pushlist 'runes' 35
+        pushlist 'runes' 41
+        pushlist 'runes' 47
+        pushlist 'runes' 53
+        pushlist 'runes' 59
+        pushlist 'runes' 65
+        pushlist 'runes' 71
+        pushlist 'runes' 77
+        pushlist 'runes' 83
+        pushlist 'runes' 89
+        #pushlist 'runes' 95
+    else
+        #need gumps here for recall scroll use
+        pushlist 'runes' 1
+        pushlist 'runes' 8
+        pushlist 'runes' 14
+        pushlist 'runes' 20
+        pushlist 'runes' 26
+        pushlist 'runes' 32
+        pushlist 'runes' 38
+        pushlist 'runes' 44
+        pushlist 'runes' 50
+        pushlist 'runes' 56
+        pushlist 'runes' 62
+        pushlist 'runes' 68
+        pushlist 'runes' 74
+        pushlist 'runes' 80
+        pushlist 'runes' 86
+        #pushlist 'runes' 92
+    endif 
+
+    ###Variables###
+#Set Farmbook
+#if not varexist runeBookFarm
+#setvar runeBookFarm
+#while targetexists
+#    pause 100
+#endwhile
+#endif
+  
+#We use this as a first run loop to set vars
+overhead 'First Run!'
+
+    # Setup pack variables
+    overhead 'If you have less than 4 pack animals'
+    overhead 'Just click the same ones for later animals'
+    wait 1000
+    overhead 'Select your pack1'
+    setvar! 'pack1'
+    wait 200
+    overhead 'Select your pack2'
+    setvar! 'pack2'
+    wait 200
+    overhead 'Select your pack3'
+    setvar! 'pack3'
+    wait 200
+    
+    # Setup Escape rune
+    overhead 'Select your escape rune/book'
+    setvar! 'escape'
+    wait 200 
+
+while not dead
+foreach book in Runebooks
+foreach x in runes
+                msg 'All follow me'
+                dclick book
+                wait 500
+                poplist 'Runebooks' 'Front'
+                clearsysmsg 
+                gumpresponse x 1551740969
+                poplist runes front
+                pause 2600
+                msg 'All guard me'
+                settimer recalltimer 0
+    skill Hiding
+    pause 600
+        #Pick Check
+        if rhandempty
+            dclicktype '3718'
+            wait 600
+        endif
+for 5    
+    while timer recalltimer < 60000
+        pause 100
+        if insysmsg 'Now tracking'
+            overhead 'Ah shit!!!'
+            cast 'recall'
+            waitfortarget
+            target 'escape'
+            wait 600
+        while mana = maxmana
+                overhead "Recall failed"
+                cast 'recall'
+                waitfortarget
+                target 'escape'
+                wait 600
+        endwhile
+            stop
+        endif
+    endwhile
+
+    if insysmsg 'Now tracking'
+            overhead 'Ah shit!!!'
+            cast 'recall'
+            waitfortarget
+            target 'escape'
+            wait 600
+            while mana = maxmana
+                overhead "Recall failed"
+                cast 'recall'
+                waitfortarget
+                target 'escape'
+                wait 600
+            endwhile
+            stop
+    endif    
+    
+    clearsysmsg
+    overhead 'Love Tap!' 23
+    #Hit it once to start 
+    hotkey 'use item in hand'
+    settimer "miner" 0
+    wait 1600
+        
+    #######Mining Loop####### 
+    while not insysmsg 'You do not see any'      
+
+        if insysmsg 'Now tracking'
+            overhead 'Ah shit!!!'
+            cast 'recall'
+            waitfortarget
+            target 'escape'
+            wait 600
+            while mana = maxmana
+                overhead "Recall failed"
+                cast 'recall'
+                waitfortarget
+                target 'escape'
+                wait 600
+            endwhile
+            stop
+        endif    
+        
+        if hits < maxhits
+            overhead 'Ah shit!!!'
+            cast 'recall'
+            waitfortarget
+            target 'escape'
+            wait 600
+            while mana = maxmana
+                overhead "Recall failed"
+                cast 'recall'
+                waitfortarget
+                target 'escape'
+                wait 600
+            endwhile
+            stop
+        endif
+        
+        #Weight check
+        if weight >= 450
+                overhead 'Too fat - restart'
+                break
+        endif
+        
+        #Pick Check
+        if rhandempty
+            dclicktype '3718'
+            wait 600
+        endif
+        
+        #Above loops more often, this is where we wait for mining timer between swings
+        if timer "miner" >= 1050
+            #wait 100
+            if insysmsg 'Harvesting is not'
+                overhead 'Cant harvest'
+                break
+            endif
+            if insysmsg 'recently travel'
+                overhead 'Just recalled'
+                break
+            endif
+            if insysmsg 'You have worn out your tool!'
+                break
+            endif 
+            
+            hotkey 'use item in hand'
+            settimer "miner" 0
+            wait 600
+        endif
+    endwhile
+    
+    overhead 'Spot Done' 33
+    sysmsg 'Spot Done' 33
+    
+    ######DUMP Loop#######
+    if findtype 6585 'backpack'
+        
+        #Check if we have used all packies
+        if list packAnimals <= 0
+            @clearlist packAnimals
+            @pushlist 'packAnimals' "p1"
+            @pushlist 'packAnimals' "p2"
+            @pushlist 'packAnimals' "p3"
+        endif
+        
+        #Set Organizer 15 to whatever packie is next
+        if inlist 'packAnimals' 'p1'
+            overhead 'Pack 1 Dump!'
+            organizer 15 'set' 
+            wft 500
+            target 'pack1'
+            poplist 'packAnimals' 'front'
+        elseif inlist 'packAnimals' 'p2'
+            overhead 'Pack 2 Dump!'
+            organizer 15 'set' 
+            wft 500
+            target 'pack2'
+            poplist 'packAnimals' 'front'
+        elseif inlist 'packAnimals' 'p3'
+            overhead 'Pack 3 Dump!'
+            organizer 15 'set' 
+            wft 500
+            target 'pack3'
+            poplist 'packAnimals' 'front'
+        else    
+            overhead 'Something done broke'
+        endif    
+        wait 100
+    
+        #Organizer is now set, dump
+        organizer 15
+    endif
+    
+    hotkey 'All Names'
+    overhead 'Time to move!'
+    
+    for 9
+        walk Up
+        wait 150
+    endfor
+endfor
+endfor 
+endfor  
+endwhile

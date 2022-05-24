@@ -1,0 +1,37 @@
+if skill Healing < 50
+    stop
+endif
+
+if not gumpexists 1066647553
+say '[codexhotbar'
+waitforgump 1066647553
+endif
+
+    if not timerexists "aids"
+    createtimer "aids"
+    settimer "aids" 12000
+    endif
+    
+    if insysmsg 'You finish applying' or insysmsg 'You heal what little'
+    settimer 'aids' 12000
+    pause 50
+    clearsysmsg
+    endif
+    
+    if hp < maxhp and timer "aids" >= 12000
+            hotkey 'Cancel Current Target'
+            pause 50
+            hotkey 'Bandage Self'
+            pause 650
+    endif
+    if insysmsg "begin applying"
+        settimer "aids" 0
+        pause 50
+        clearsysmsg
+    endif
+    
+    if dead 
+        stop
+    else
+        loop
+    endif

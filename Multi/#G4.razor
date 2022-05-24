@@ -1,0 +1,37 @@
+if skill Magery >= 80 and mana < maxmana
+    script 'Med & Shroom'
+endif
+
+if findtype 11552 backpack
+    hotkey 'Cancel Current Target'
+    pause 50
+    dclicktype 11552
+    wft 1000
+    target 'self'
+    pause 500
+    script '#Autobandage'
+endif
+
+if skill Mining >= 50 and findtype 3718
+    while not insysmsg 'You have completely exhausted'
+    hotkey 'Cancel Current Target'
+    pause 50
+    dclicktype 3718 true
+    pause 2000
+    endwhile
+endif
+
+if skill Lumberjacking >= 50 and findtype 3908
+    while not insysmsg 'You have completely exhausted'
+    hotkey 'Cancel Current Target'
+    pause 50
+    dclicktype 3908 true
+    wft 500
+    hotkey 'Target Self'
+    pause 2000
+    endwhile
+endif
+
+if skill AnimalLore >= 80
+    useskill AnimalLore
+endif
