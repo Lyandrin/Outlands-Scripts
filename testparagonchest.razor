@@ -1,0 +1,91 @@
+if not listexists paragonchest
+  createlist paragonchest
+  pushlist paragonchest 3712
+  pushlist paragonchest 3708
+  pushlist paragonchest 3651
+  pushlist paragonchest 3650
+  pushlist paragonchest 3649
+  pushlist paragonchest 3648
+  pushlist paragonchest 2475
+  pushlist paragonchest 2472
+endif
+if not listexists gparagonchest
+  createlist gparagonchest
+  pushlist gparagonchest 29833
+  pushlist gparagonchest 29832
+endif
+foreach x in paragonchest
+  if findtype x backpack as itemfound
+    if insysmsg 'that appears to be unlocked and devoid of traps'
+      lift itemfound
+      pause 250
+      drop endbag -1 -1 0
+      pause 750
+      script testparagonchest
+    endif
+    if insysmsg 'devoid of traps'
+        dclicktype 5373 backpack
+        wft 1500
+        target itemfound
+        pause 5000
+        loop
+    else
+      dclicktype 29001 backpack
+      wft 1500
+      target itemfound
+      pause 1000
+      if insysmsg 'you attempt to remove traps'
+          pause 5000
+        loop
+      endif
+      loop
+    endif
+  endif
+endfor
+foreach x in gparagonchest
+  if findtype x backpack as itemfound
+    if insysmsg 'that appears to be unlocked and devoid of traps'
+      lift itemfound
+      pause 250
+      drop endbag -1 -1 0
+      pause 750
+      script testparagonchest
+    endif
+    if insysmsg 'devoid of traps'
+      dclicktype 5373 backpack
+      wft 1500
+      target itemfound
+      pause 5000
+      loop
+    else
+      dclicktype 29001 backpack
+      wft 1500
+      target itemfound
+      pause 1000
+      if insysmsg 'you attempt to remove traps'
+          pause 5000
+        loop
+      endif
+      loop
+    endif
+  endif
+endfor
+foreach x in paragonchest
+  if findtype x startbag as itemfound
+    lift itemfound 1
+    pause 300
+    drop backpack -1 -1 0
+    pause 300
+    loop
+  endif
+endfor
+foreach x in gparagonchest
+  if findtype x startbag as itemfound
+    lift itemfound 1
+    pause 300
+    drop backpack -1 -1 0
+    pause 300
+    loop
+  endif
+endfor
+loop
