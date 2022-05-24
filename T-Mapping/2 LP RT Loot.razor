@@ -1,0 +1,91 @@
+//Variables that need to exist for this script to 
+//function:
+    //TMap Chest
+
+//This script will invis you, remove traps, lockpick (will skip all previous steps if chest is open already) and precast recall and loot chest using restock agent
+
+//Invis if chest not open already
+if not hidden
+    //Open Metal Chest
+    if not findtype '29076' true
+        //Open Wooden Chest
+        if not findtype '29089' true
+            if mana > 19           
+                if skill 'Magery' >= 80
+                    dclicktype 'drill' backpack
+                    pause 250
+                    target 'TMap Chest'
+                    pause 500
+                    cast 'Invisibility'
+                    waitfortarget 5000
+                    target 'self'
+                endif
+            endif
+        endif
+    endif
+endif
+
+//Remove Traps Section
+while not dead
+    //Skip ahead if devoid of traps
+    if insysmsg 'appears to be devoid'
+        break
+    endif
+    
+    //Skip ahead if chest already open
+    if findtype '29076' true
+        break
+    endif
+    if findtype '29089' true
+        break
+    endif
+    
+    //Remove traps
+    dclicktype 'drill' backpack
+    pause 250
+    target 'TMap Chest'
+    pause 250
+endwhile
+
+//Lockpicking Section
+while not dead
+    //Skip ahead if chest already open
+    if findtype '29076' true
+        break
+    endif
+    if findtype '29089' true
+        break
+    endif
+    
+    //Lockpick
+    dclicktype 'lockpicks' backpack
+    pause 250
+    target 'TMap Chest'
+    pause 250
+endwhile
+
+//Open Metal Chest
+if findtype '29076' true
+    dclicktype '29076' true
+endif
+//Open Wooden Chest
+if findtype '29089' true
+    dclicktype '29089' true
+endif
+
+//Precast Recall
+cast 'Recall'
+clearsysmsg 
+
+//Restock agent from chest
+restock 1
+waitfortarget 
+target 'TMap Chest'
+
+//Recast recall if disrupted
+while not dead
+    if insysmsg 'Your concentration is disturbed'
+    pause 100
+    cast 'Recall'
+    endif
+endwhile 

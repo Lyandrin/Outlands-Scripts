@@ -1,0 +1,42 @@
+#########################################
+# █████ █████             ███           #
+#░░███ ░░███             ░░░            #
+# ░░███ ███   █████ ████ ████   ██████  #
+#  ░░█████   ░░███ ░███ ░░███  ███░░███ #
+#   ███░███   ░███ ░███  ░███ ░███ ░███ #
+#  ███ ░░███  ░███ ░███  ░███ ░███ ░███ #
+# █████ █████ ░░███████  █████░░██████  #
+#░░░░░ ░░░░░   ░░░░░███ ░░░░░  ░░░░░░   #
+#              ███ ░███                 #
+#             ░░██████                  #
+#              ░░░░░░                   #
+#########################################
+
+#set the restock agent on line 25 to which ever you use
+#to get regs from your bank box
+
+#set the organizer on line 36 to the one you use
+#to dump your boards in the bank (default restock 1)
+
+wait 2000
+menu 0x4052BDC1 0
+waitfortarget 1500
+target 'self'
+waitforgump 3232825965
+gumpclose 3232825965
+menu 0x4052BDC1 1
+pause 1000
+
+while not dead 
+    while findtype 'log%s' backpack as logs
+        dclick logs
+    endwhile
+        if findtype 'board%s' backpack
+            menu 0x42EA039D 0
+            waitfortarget 1500
+            target 'self'
+            pause 500
+        else
+            script 'RecallController'
+        endif
+endwhile

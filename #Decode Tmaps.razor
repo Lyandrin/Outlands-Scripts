@@ -1,0 +1,77 @@
+// Click through Tome gumps
+// to pull one out at a time
+    wait 500
+    dclick 'dabook'
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 1'
+    gumpresponse 10 
+    wait 500
+endif
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 2'
+    gumpresponse 11 
+endif
+    wait 500
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 3'
+    gumpresponse 12 
+endif
+    wait 500
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 4'
+    gumpresponse 13 
+endif
+    wait 500
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 5'
+    gumpresponse 14 
+endif
+    wait 500
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 6'
+    gumpresponse 15 
+endif
+    wait 500
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 7'
+    gumpresponse 16 
+endif
+    wait 500
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 8'
+    gumpresponse 17 
+endif
+    wait 500
+if not findtype 5356 backpack
+    wait 500
+    overhead 'lvl 9'
+    gumpresponse 18 
+endif
+// Use spyglass on map
+    dclicktype '5365' backpack
+    wait 500
+    targettype '5356' backpack
+    wait 1000
+    clearjournal 
+    clearsysmsg 
+// If map is pulled out, decode
+while findtype 5365 backpack
+    wait 100
+    gumpresponse 4 
+    wait 100
+// Map fully decoded, put back in tome and restart
+if insysmsg 'reached'
+    lifttype '5356' 1 backpack
+    drop 'dabook' -1 -1 -1
+break
+endif
+endwhile
+loop

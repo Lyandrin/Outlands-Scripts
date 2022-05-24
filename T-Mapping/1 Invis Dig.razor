@@ -1,0 +1,25 @@
+//Variables that need to exist for this script to 
+//function:
+    //TMap Chest
+    
+//Use invis version OR gate version. Not both.
+
+//This script will repeatedly try to dig for the chest, prompt you to set the TMap Chest variable ([use control + shift] to target the chests nameplate even before it comes out of the ground) and once you are done digging it will give you 1s lead time to walk towards the chest. You want to be standing next to it for the RT and LP script to function properly. If you accidentally misclick on setting the TMap Chest variable simply run this script again while still digging. If youre done digging and you dont have the TMap Chest variable set properly youre on your own for this chest!
+
+while not dead
+    dclicktype 'shovel' backpack
+    pause 600
+    if insysmsg 'you dig and find something' or findbuff 'Paralyze' 
+        pause 1000
+        overhead 'Target the Chest'
+        setvar 'TMap Chest'
+        cast 'Invisibility'
+        while not dead
+            if insysmsg 'no longer entangled'
+                pause 1000
+                target 'self'
+            endif
+            pause 500
+        endwhile
+    endif
+endwhile

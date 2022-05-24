@@ -1,0 +1,110 @@
+#########################################
+# █████ █████             ███           #
+#░░███ ░░███             ░░░            #
+# ░░███ ███   █████ ████ ████   ██████  #
+#  ░░█████   ░░███ ░███ ░░███  ███░░███ #
+#   ███░███   ░███ ░███  ░███ ░███ ░███ #
+#  ███ ░░███  ░███ ░███  ░███ ░███ ░███ #
+# █████ █████ ░░███████  █████░░██████  #
+#░░░░░ ░░░░░   ░░░░░███ ░░░░░  ░░░░░░   #
+#              ███ ░███                 #
+#             ░░██████                  #
+#              ░░░░░░                   #
+#########################################
+
+# ID's for items used
+########################
+@setvar! Boards 7127
+@setvar! Logs 7133
+########################
+
+# creating list to clear other lists to and back
+createlist tempPackieList
+
+overhead "::: bank controller :::"
+clearsysmsg 
+
+# Set our packy dumps back to zero
+setvar! packieDumps 0
+
+wait 2000
+while findtype 'iron ore' backpack as ore
+    dclick ore
+    while queued
+    endwhile
+endwhile
+
+overhead "here"
+#SMELT from full packies 
+while list fullPackieList > 0 
+    if atlist fullPackieList 0 as thePack
+        # open first packie in the list  
+        dclick thePack
+        wait 1000
+        
+        # check for ore and smelt it
+        while findtype 'iron ore' thePack as theOre
+            overhead "::: smelting from packie :::"
+            dclick theOre
+            wait 1000
+        endwhile
+    endif
+    # remove packie we just handled
+    # put back in empty list
+    if atlist fullPackieList 0 as packie
+        poplist fullPackieList 'front'
+        pushlist tempPackieList packie 'back'
+    endif
+endwhile
+
+#smelt from partial packies
+while list emptyPackieList > 0 
+    if atlist emptyPackieList 0 as thePack
+        # open first packie in the list  
+        dclick thePack
+        wait 1000
+        
+        # check for ore and smelt it
+        while findtype 'iron ore' thePack as theOre
+            overhead "::: smelting from Packie :::"
+            dclick theOre
+            wait 1000
+        endwhile
+    endif
+    if atlist emptyPackieList 0 as packie
+        poplist emptyPackieList 'front'
+        pushlist tempPackieList packie 'back'
+    endif    
+endwhile
+    
+# clear temp list back to empty list
+while list tempPackieList > 0
+    if atlist tempPackieList 0 as packie
+        poplist tempPackieList 'front'
+        pushlist emptyPackieList packie 'back'       
+    endif
+endwhile
+    
+# DO RESTOCK STUFF  
+wait 500
+dclicktype pickaxe backpack
+wait 1000
+menu 0x4052BDC1 0
+waitfortarget 1500
+target 'self'
+waitforgump 3232825965
+gumpclose 3232825965
+menu 0x4052BDC1 1
+pause 1000
+
+while not dead 
+    if findtype 'iron ingot%s' backpack
+        menu 0x42EA039D 0
+        waitfortarget 1500
+        target 'self'
+        pause 500
+    else
+        overhead "Leaving BankController"
+        script 'M_RecallController'
+    endif
+endwhile

@@ -1,0 +1,59 @@
+hotkey 'Cancel Current Target'
+//Repairbench
+dclicktype 29355 true
+pause 2500
+//Shelf Restock
+menu 0x4052BDC1 0
+waitfortarget
+target 'self'
+pause 500
+gumpclose
+//Recycler
+dclick 0x40E5F1E3
+waitforgump 4045111101
+gumpresponse 3 4045111101
+waitfortarget
+target 'self'
+pause 500
+gumpclose 4045111101
+//Stockpile
+menu 0x42EA039D 0
+wft 1500
+hotkey 'Target Self'
+pause 500
+//Gardenshed
+menu 0x42E9F3FE 0
+wft 1500
+hotkey 'Target Self'
+pause 500
+//Chests
+dclick 0x48C6DE5A
+pause 600
+dclick 0x422D7A1E
+pause 600
+//Organizer - Gold
+organizer 1
+pause 600
+//Organizer - Aspect
+organizer 2
+pause 600
+//Organizer - Skillscrolls
+organizer 3
+pause 600
+//Organizer - Rare Loot
+organizer 6
+pause 600
+//Shelf Resupply
+menu 0x4052BDC1 1
+gumpclose
+if skill Chivalry >= 80
+    msg '[ChivalryHotbar'
+    pause 100
+endif
+if skill Parrying >= 80
+    msg '[CodexHotbar'
+    pause 100
+endif
+if skill Necromancy >= 80
+    msg '[NecromancyHotbar'
+endif

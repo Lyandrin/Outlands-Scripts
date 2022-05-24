@@ -1,0 +1,32 @@
+//Variables that need to exist for this script to 
+//function:
+    //TMap Chest
+    //My Runebook
+
+//This script acts differently at different stages of the process. If the tmap chest is still closed it will pull the mobs in closer. If the tmap chest is open and you press this key it will demo the chest and target your runebook to send you home regardless of whether you got all the loot. Dont run this macro if the chest hasnt been looted and is open or all your loot is deleted
+
+//Pull
+    //Metal Chest Closed
+    if findtype '3649' true
+        menu 'TMap Chest' 0
+    endif
+
+    //Wooden Chest Closed
+    if findtype '3651' true
+        menu 'TMap Chest' 0
+    endif
+    
+//Demo
+    //Metal Chest Open
+    if findtype '29076' true
+        menu 'TMap Chest' 1
+        pause 250
+        target 'My Runebook'
+    endif
+    
+    //Wooden Chest Open
+    if findtype '29089' true
+        menu 'TMap Chest' 1
+        pause 250
+        target 'My Runebook'
+    endif
